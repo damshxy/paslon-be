@@ -7,7 +7,7 @@ import { Request, Response } from "express"
 export default new class PaslonService {
   private readonly PaslonRepository: Repository<Paslons> = AppDataSource.getRepository(Paslons)
 
-  async index(req: Request, res: Response): Promise<Response> {
+  async find(req: Request, res: Response): Promise<Response> {
     try {
       const paslons = await this.PaslonRepository.find();
       if (paslons.length === 0) return res.status(404).json({ Error: "Paslon not found" });
@@ -19,7 +19,7 @@ export default new class PaslonService {
     }
   }
 
-  async show(req: Request, res: Response): Promise<Response> {
+  async findOne(req: Request, res: Response): Promise<Response> {
     try {
       const id = Number(req.params.id);
       
@@ -46,8 +46,8 @@ export default new class PaslonService {
         image: data.image
       })
 
-      const todos = this.PaslonRepository.save(obj)
-      return res.status(200).json({ message: 'created successfully', todos})
+      const paslon = this.PaslonRepository.save(obj)
+      return res.status(200).json({ message: "created succesfully", paslon})
     } catch (err) {
       return res.status(500).json({ Error: "error while insert data"})
     }
@@ -58,7 +58,7 @@ export default new class PaslonService {
       const id = Number(req.params.id);
       const { name, visi, image } = req.body
 
-      const check = await this.PaslonRepository.find({ where: { id } });
+      const check = await this.PaslonRepository.findOne({ where: { id } });
       if (!check) return res.status(404).json({ Error: "Paslon not found" });
       
       const data = {
@@ -79,7 +79,7 @@ export default new class PaslonService {
       const id = Number(req.params.id);
       const { name, visi, image } = req.body
 
-      const check = await this.PaslonRepository.find({ where: { id } });
+      const check = await this.PaslonRepository.findOne({ where: { id } });
       if (!check) return res.status(404).json({ Error: "Paslon not found" });
       
       const data = {

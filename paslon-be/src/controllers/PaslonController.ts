@@ -2,12 +2,12 @@ import { Request, Response } from "express";
 import PaslonService from "../services/PaslonService";
 
 export default new class TodoController {
-  index(req: Request, res: Response) {
-    PaslonService.index(req, res)
+  find(req: Request, res: Response) {
+    PaslonService.find(req, res)
   }
 
-  show(req: Request, res: Response) {
-    PaslonService.show(req, res)
+  findOne(req: Request, res: Response) {
+    PaslonService.findOne(req, res)
   }
 
   create(req: Request, res: Response) {

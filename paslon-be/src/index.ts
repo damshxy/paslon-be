@@ -1,6 +1,7 @@
 import * as express from "express"
 import { AppDataSource } from "./data-source"
 import router from "./routes"
+import * as dotenv from 'dotenv'
 
 const customCors = (req: express.Request, res: express.Response, next: express.NextFunction) => {
     res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
@@ -10,9 +11,11 @@ const customCors = (req: express.Request, res: express.Response, next: express.N
     next();
 };
 
+dotenv.config()
+
 AppDataSource.initialize().then(async () => {
     const app = express()
-    const port = 5000
+    const port = process.env.PORT
     
     app.use(customCors)
     app.use(express.json())
